@@ -106,7 +106,7 @@ def flash_sequence():
         time.sleep(0.5)
         pen.penup()
         pen.goto(0,0)
-    pen.write("Shape sequence has been shown!! Type it in now:", align = "center", font=("Arial", 16, "normal"))
+    pen.write("Shape sequence has been shown!! Type it in now:", align = "center", font=("Inconsolata", 16, "normal"))
     time.sleep(1)
 
 def handling_input():
@@ -115,35 +115,79 @@ def handling_input():
     check_input()
 
 def check_input():
+    global current_round, total_rounds
     typed_input = user_input.strip().lower().split()
     pen.penup()
     pen.goto(0, -100)
-    pen.write(f"Your answer, {typed_input}", align = "center", font=("Arial", 16, "normal"))
+    pen.write(f"Your answer, {typed_input}", align = "center", font=("Inconsolata", 16, "normal"))
     pen.goto(0, -150)  
-    pen.write(f"Correct sequence, {sequence}", align = "center", font=("Arial", 16, "bold"))
+    pen.write(f"Correct sequence, {sequence}", align = "center", font=("Inconsolata", 16, "bold"))
     if typed_input == sequence:
-        screen.textinput("Result", "Yaaay! You are correct! :D Press esc to exit!")
+        pen.goto(0, -200)
+        pen.write("Yay that was correct! You memory master!!", align = "center", font=("Inconsolata", 20, "normal"))
+        current_round += 1
+        if current_round <= total_rounds:
+            time.sleep(2)
+            pen.clear()
+            start_rounds()
+        else:
+            time.sleep(2)
+            pen.goto(0, 0)
+            pen.write("YESS YOU WON THE GAME!!", align = "center", font=("Inconsolata", 20, "bold"))
+            time.sleep(3)
+            turtle.bye()
     else:
-        screen.textinput("Result", "Oop...I guess you couldn't remember :/..press esc to exit.")
-    turtle.bye()
+        pen.goto(0, 100)
+        pen.write( "Oop...I guess you couldn't remember :/...Game Over", align = "center", font=("Inconsolata", 20, "normal"))
+        time.sleep(4)
+        turtle.bye()
+
+    current_round = 1
+    total_rounds = 1
 
 def play_rounds():
     while True:
         rounds = screen.textinput("Rounds", "How many rounds would you like to play?")
-        if rounds.isdigit():
+        if rounds and rounds.isdigit():
             rounds = int(rounds)
             if rounds <= 0:
                 screen.textinput("Rounds", "Invalid input! Try again!")
                 continue
+            else:
+                return rounds
+        else:
+            screen.textinput("Rounds", "Please enter a valid number of rounds! It ain't that hard.")
+
+def game():
+    global current_round, total_rounds
+    total_rounds = play_rounds()
+    current_round = 1
+    start_rounds()
+
+def start_rounds():
+    global current_round
+    if current_round <= total_rounds:
+        sequence.clear
+        pen.clear()
+        pen.penup()
+        pen.goto(0, 250)
+        pen.write(f"Round, {current_round} out of {total_rounds}", align = "center", font=("Arial", 20, "bold"))
+        time.sleep(2)
+        flash_sequence()
+        screen.ontimer(handling_input, 500)
+    else: 
+        pen.clear()
+        pen.penup()
+        pen.goto(0, 0)
+        pen.write("Yay you have completed all the rounds of the game!!", align = "center", font=("Arial", 20, "bold"))
 
 
 
+    
 
-play_rounds()
-flash_sequence()
-screen.ontimer(handling_input, 500)
 
-screen.mainloop()       
+game()
+screen.mainloop()      
 
 
     
