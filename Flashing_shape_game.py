@@ -4,7 +4,7 @@ import random
 
 screen = turtle.Screen()
 screen.setup(600, 600)
-screen.bgcolor("black")
+screen.bgcolor("#8B8FDE")
 screen.title("Memory Challenge Game")
 screen.tracer(0)
 
@@ -12,7 +12,9 @@ pen = turtle.Turtle()
 pen.hideturtle()
 pen.speed(0)
 
-colors = ["pink", "blue", "yellow", "orange", "purple", "red", "magenta", "green"]
+
+
+colors = ["#FF8DA1", "#4687F8", "#FFEE8C", "#FFA500", "#E0B0FF", "#FA5053", "#C54B8C", "#A8DCAB"]
 shapes = ["circle", "square", "triangle"]
 sequence = []
 user_sequence = []
@@ -59,19 +61,19 @@ def ready_set_go ():
     pen.penup()
     pen.goto(0, 0)
     pen.color(random.choice(colors))
-    pen.write("Ready?", align = "center", font=("Inconsolata", 50, "bold"))
+    pen.write("Ready?", align = "center", font=("Courier New", 50, "bold"))
     time.sleep(1)
     pen.clear()
     pen.penup()
     pen.goto(0, 0)
     pen.color(random.choice(colors))
-    pen.write("Set!", align = "center", font=("Inconsolata", 50, "bold"))
+    pen.write("Set!", align = "center", font=("Courier New", 50, "bold"))
     time.sleep(1)
     pen.clear()
     pen.penup()
     pen.goto(0, 0)
     pen.color(random.choice(colors))
-    pen.write("Go!!", align = "center", font=("Inconsolata", 50, "bold"))
+    pen.write("Go!!", align = "center", font=("Courier New", 50, "bold"))
     time.sleep(1)
     pen.clear()
 
@@ -124,6 +126,7 @@ def check_input():
     pen.write(f"Correct sequence, {sequence}", align = "center", font=("Inconsolata", 16, "bold"))
     if typed_input == sequence:
         pen.goto(0, -200)
+        pen.color("green")
         pen.write("Yay that was correct! You memory master!!", align = "center", font=("Inconsolata", 20, "normal"))
         current_round += 1
         if current_round <= total_rounds:
@@ -132,18 +135,17 @@ def check_input():
             start_rounds()
         else:
             time.sleep(2)
-            pen.goto(0, 0)
+            pen.goto(0, 200)
             pen.write("YESS YOU WON THE GAME!!", align = "center", font=("Inconsolata", 20, "bold"))
             time.sleep(3)
             turtle.bye()
     else:
         pen.goto(0, 100)
+        pen.color("red")
         pen.write( "Oop...I guess you couldn't remember :/...Game Over", align = "center", font=("Inconsolata", 20, "normal"))
         time.sleep(4)
         turtle.bye()
 
-    current_round = 1
-    total_rounds = 1
 
 def play_rounds():
     while True:
@@ -167,7 +169,7 @@ def game():
 def start_rounds():
     global current_round
     if current_round <= total_rounds:
-        sequence.clear
+        sequence.clear()
         pen.clear()
         pen.penup()
         pen.goto(0, 250)
