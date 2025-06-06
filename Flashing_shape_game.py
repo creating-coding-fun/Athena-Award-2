@@ -136,8 +136,12 @@ def check_input():
         else:
             time.sleep(2)
             pen.goto(0, 200)
-            pen.write("YESS YOU WON THE GAME!!", align = "center", font=("Inconsolata", 20, "bold"))
+            pen.write("YESS YOU WON THE GAME!!", align = "center", font=("Inconsolata", 40, "bold"))
             time.sleep(3)
+            fireworks()
+            pen.goto(0, 200)
+            pen.write("YOU WIN!!", align = "center", font=("Inconsolata", 50, "bold"))
+            time.sleep(2)
             turtle.bye()
     else:
         pen.goto(0, 100)
@@ -183,13 +187,26 @@ def start_rounds():
         pen.goto(0, 0)
         pen.write("Yay you have completed all the rounds of the game!!", align = "center", font=("Arial", 20, "bold"))
 
+def fireworks():
+    pen.clear()
+    for i in range(30):
+       x = random.randint(-200, 200)
+       y = random.randint(-200, 200)
+       pen.goto(x,y)
+       pen.pendown()
+       pen.color(random.choice(colors))
+       angle = random.randint(0, 360)
+       pen.setheading(angle)
+       length = random.randint(60, 120)
+       pen.forward(length)
+       pen.dot(random.randint(8, 18))
+    screen.update()
 
-
-    
 
 
 game()
-screen.mainloop()      
+screen.mainloop()    
+    
 
 
     
